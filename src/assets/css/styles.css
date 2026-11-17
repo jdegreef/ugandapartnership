@@ -267,10 +267,14 @@ blockquote.pull footer { font-size: .92rem; color: var(--muted); font-weight: 60
 .pull-large p { font-size: clamp(1.3rem, 2.2vw, 1.65rem); }
 
 /* ---------- CTA band ---------- */
-.cta-band { background: linear-gradient(120deg, var(--red) 0%, var(--orange) 60%, #e58a22 100%); color: var(--white); padding: clamp(56px, 7vw, 88px) 0; }
-.cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
-.cta-band h2 { color: var(--white); margin-bottom: .3em; max-width: 18em; }
-.cta-band p { margin: 0; color: rgba(255,255,255,.9); max-width: 36em; }
+.cta-photo { position: relative; isolation: isolate; overflow: hidden; color: rgba(255,255,255,.9); background: var(--ink); padding: clamp(80px, 10vw, 128px) 0; text-align: center; }
+.cta-photo-media { position: absolute; inset: 0; z-index: -1; }
+.cta-photo-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+.cta-photo-media::after { content: ''; position: absolute; inset: 0; background: rgba(20,15,12,.7); }
+.cta-photo-inner { display: flex; flex-direction: column; align-items: center; }
+.cta-photo h2 { color: var(--white); max-width: 15em; font-size: clamp(2rem, 4.4vw, 3.6rem); }
+.cta-photo-text { max-width: 34em; font-size: 1.15rem; margin-bottom: 28px; }
+.cta-photo .cta-actions { justify-content: center; }
 .cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* ---------- About ---------- */
@@ -290,13 +294,64 @@ blockquote.pull footer { font-size: .92rem; color: var(--muted); font-weight: 60
 .timeline h3 { margin: 2px 0 6px; font-size: 1.2rem; }
 .timeline p { margin: 0; color: var(--muted); font-size: .98rem; }
 
-.people { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 36px 28px; }
-.person-photo { aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--sand-2); margin-bottom: 18px; max-width: 200px; box-shadow: 0 0 0 6px var(--white), var(--shadow); }
-.section-sand .person-photo { box-shadow: 0 0 0 6px var(--cream), var(--shadow); }
-.person-photo img { width: 100%; height: 100%; object-fit: cover; }
-.person h3 { font-size: 1.15rem; margin-bottom: 2px; }
-.person p { color: var(--muted); font-size: .95rem; margin-bottom: 6px; }
-@media (max-width: 520px) { .people { grid-template-columns: 1fr 1fr; gap: 28px 18px; } }
+.section-head-split { align-items: flex-end; }
+.section-head-split .section-lead { margin: 0; max-width: 30em; }
+
+/* Board: portrait cards */
+.portrait-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 28px; }
+.portrait img { width: 100%; aspect-ratio: 16 / 10.5; object-fit: cover; object-position: 50% 30%; border-radius: 18px; background: var(--sand-2); }
+.portrait-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 14px; }
+.portrait h3 { margin: 0; font-size: 1.35rem; }
+.portrait-meta span { font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--orange-ink); white-space: nowrap; }
+@media (max-width: 900px) { .portrait-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .portrait-grid { gap: 24px 14px; } .portrait img { aspect-ratio: 1; } .portrait-meta { flex-direction: column; align-items: flex-start; gap: 2px; margin-top: 10px; } .portrait h3 { font-size: 1.05rem; } .portrait-meta span { white-space: normal; } }
+
+/* Uganda leaders: story-led */
+.leader-features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-bottom: 28px; }
+.leader-feature { display: flex; background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
+.leader-feature > img { width: 40%; max-width: 230px; object-fit: cover; flex-shrink: 0; }
+.leader-feature-body { padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+.leader-quote-icon { width: 32px; height: 32px; color: var(--orange); }
+.leader-feature blockquote { margin: 0; flex-grow: 1; }
+.leader-feature blockquote p { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 1.3rem; line-height: 1.5; color: var(--ink); font-variation-settings: 'opsz' 36; }
+.leader-name h3 { margin: 0; font-size: 1.35rem; }
+.leader-name span { font-size: .92rem; color: var(--muted); }
+.leader-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.leader-list li { display: flex; align-items: center; gap: 16px; padding: 14px; border-radius: 18px; background: var(--cream); }
+.leader-list img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.leader-list h3 { margin: 0; font-size: 1.1rem; }
+.leader-list span { font-size: .85rem; color: var(--muted); }
+@media (max-width: 1000px) { .leader-features { grid-template-columns: 1fr; } .leader-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .leader-feature { flex-direction: column; } .leader-feature > img { width: 100%; max-width: none; aspect-ratio: 4 / 3; } .leader-list { grid-template-columns: 1fr; } }
+
+/* Faith: three convictions */
+.convictions-head { text-align: center; margin-bottom: 48px; }
+.convictions-head h2 { font-style: italic; font-weight: 400; font-size: clamp(2.1rem, 4.4vw, 3.75rem); margin-bottom: .4em; }
+.convictions-head p:last-child { color: var(--muted); font-size: 1.1rem; margin: 0; }
+.conviction-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.conviction-cards li { padding: 32px; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: center; align-content: start; }
+.conviction-cards h3 { margin: 0; font-size: 1.75rem; }
+.conviction-cards p { grid-column: 1 / -1; margin: 14px 0 0; }
+.conviction-num { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: var(--white); font-family: var(--font-display); font-weight: 600; font-size: 1.2rem; background: var(--red); }
+.conviction-cards li:nth-child(2) .conviction-num { background: var(--orange-ink); }
+.conviction-cards li:nth-child(3) .conviction-num { background: #8f5c08; }
+@media (max-width: 860px) { .conviction-cards { grid-template-columns: 1fr; } }
+
+/* About hero: photo mosaic */
+.mosaic-hero { background: var(--sand); padding: clamp(56px, 7vw, 88px) 0 clamp(56px, 7vw, 88px); }
+.mosaic-hero-head { text-align: center; display: flex; flex-direction: column; align-items: center; margin-bottom: 44px; }
+.mosaic-hero h1 { font-size: clamp(2.4rem, 5vw, 4.25rem); }
+.mosaic-hero h1 em { color: var(--ink); font-weight: 400; }
+.mosaic-hero .lead { color: var(--ink-2); margin: 0; }
+.mosaic { display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 20px; align-items: start; }
+.mosaic img { width: 100%; object-fit: cover; border-radius: 20px; }
+.mosaic-main { height: clamp(260px, 32vw, 420px); object-position: 50% 35%; }
+.mosaic-side { height: clamp(200px, 24vw, 310px); margin-top: clamp(32px, 5vw, 64px); }
+@media (max-width: 700px) {
+  .mosaic { grid-template-columns: 1fr 1fr; }
+  .mosaic-main { grid-column: 1 / -1; grid-row: 1; }
+  .mosaic-side { margin-top: 0; height: 160px; }
+}
 
 /* ---------- Impact ---------- */
 .facts { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 14px; }

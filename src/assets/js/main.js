@@ -129,7 +129,7 @@ if (form) {
 
 // Gentle reveal-on-scroll for cards and sections
 if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const els = document.querySelectorAll('.story-card, .partner-card, .way, .person, .mv-card, .timeline li, .gallery li');
+  const els = document.querySelectorAll('.story-card, .partner-card, .way, .portrait, .leader-feature, .leader-list li, .conviction-cards li, .mv-card, .timeline li, .gallery li');
   const io = new IntersectionObserver(
     (entries) => entries.forEach((en) => {
       if (en.isIntersecting) {

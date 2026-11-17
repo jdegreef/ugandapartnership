@@ -31,14 +31,14 @@ const verse = (text, ref, { tone = 'sand' } = {}) => `
 </section>`;
 
 const ctaBand = (title = 'Partner with us and extend hope in Uganda', text = 'Whether through giving, prayer, or going, every contribution creates lasting change in communities that need it most.') => `
-<section class="cta-band">
-  <div class="container cta-inner">
-    <div>
-      <h2>${esc(title)}</h2>
-      <p>${esc(text)}</p>
-    </div>
+<section class="cta-photo">
+  <div class="cta-photo-media">${img('/assets/images/heroes/home.webp', '')}</div>
+  <div class="container cta-photo-inner">
+    <p class="eyebrow eyebrow-light">Get involved</p>
+    <h2>${esc(title)}</h2>
+    <p class="cta-photo-text">${esc(text)}</p>
     <div class="cta-actions">
-      <a class="btn btn-light" href="/get-involved/">Ways to get involved ${icon('arrow')}</a>
+      <a class="btn btn-primary" href="/get-involved/">Ways to get involved ${icon('arrow')}</a>
       <a class="btn btn-outline-light" href="/contact/">Contact us</a>
     </div>
   </div>
@@ -69,13 +69,6 @@ const partnerCard = (p) => `
   </a>
 </article>`;
 
-const person = (m) => `
-<li class="person">
-  <div class="person-photo">${img(m.image, m.name)}</div>
-  <h3>${esc(m.name)}</h3>
-  <p>${esc(m.role)}</p>
-  ${m.story ? `<a class="text-link small" href="/impact/${m.story}/">Read ${esc(m.name.split(' ')[0])}’s story ${icon('arrow')}</a>` : ''}
-</li>`;
 
 // Figures below are taken directly from the partner reports quoted in the stories.
 const stats = [
@@ -203,7 +196,18 @@ function about() {
     { year: 'Today', title: 'A growing family of partners', text: `${partners.length} ministry partners serving through education, healthcare, prison ministry and leadership training.` },
   ];
   const body = `
-${pageHero({ eyebrow: 'About us', title: 'Rooted in faith. Driven by partnership.', lead: 'We strengthen lives through faith-based action, empowering Ugandan communities to rise with dignity and hope.', image: '/assets/images/heroes/about.webp', alt: 'The TUPS team with Ugandan partners at the equator monument' })}
+<section class="mosaic-hero">
+  <div class="container mosaic-hero-head">
+    <p class="eyebrow">About us</p>
+    <h1>Rooted in faith. <em>Driven by partnership.</em></h1>
+    <p class="lead">We strengthen lives through faith-based action, empowering Ugandan communities to rise with dignity and hope.</p>
+  </div>
+  <div class="container mosaic">
+    ${img('/assets/images/how-started.webp', 'Children in matching shirts at a church outreach', { cls: 'mosaic-side' })}
+    ${img('/assets/images/heroes/about.webp', 'The TUPS team with Ugandan partners at the equator', { cls: 'mosaic-main', eager: true })}
+    ${img('/assets/images/stories/karamoja-children.webp', 'Children walking together in Karamoja', { cls: 'mosaic-side' })}
+  </div>
+</section>
 
 <section class="section">
   <div class="container mv-grid">
@@ -238,14 +242,19 @@ ${pageHero({ eyebrow: 'About us', title: 'Rooted in faith. Driven by partnership
 
 <section class="section">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head section-head-split">
       <div>
         <p class="eyebrow">In Canada</p>
         <h2>Board of directors</h2>
-        <p class="section-lead">Volunteers who bring experience in ministry, international development and organizational leadership.</p>
       </div>
+      <p class="section-lead">Volunteers who bring experience in ministry, international development and organizational leadership.</p>
     </div>
-    <ul class="people">${board.map(person).join('')}</ul>
+    <ul class="portrait-grid">${board.map((m) => `
+      <li class="portrait">
+        ${img(m.image, m.name)}
+        <div class="portrait-meta"><h3>${esc(m.name)}</h3><span>${esc(m.shortRole || m.role)}</span></div>
+      </li>`).join('')}
+    </ul>
   </div>
 </section>
 
@@ -254,18 +263,39 @@ ${pageHero({ eyebrow: 'About us', title: 'Rooted in faith. Driven by partnership
     <div class="section-head">
       <div>
         <p class="eyebrow">In Uganda</p>
-        <h2>Leadership partners</h2>
-        <p class="section-lead">A network of leaders committed to values-driven leadership and sustainable change across Uganda.</p>
+        <h2>Leaders in their own words</h2>
+        <p class="section-lead">Ugandan pastors, teachers and organizers committed to values-driven leadership and lasting change in their own communities.</p>
       </div>
     </div>
-    <ul class="people">${ugandaLeaders.map(person).join('')}</ul>
+    <div class="leader-features">${ugandaLeaders.filter((m) => m.quote).map((m) => `
+      <article class="leader-feature">
+        ${img(m.image, m.name)}
+        <div class="leader-feature-body">
+          ${icon('quote', 'icon leader-quote-icon')}
+          <blockquote><p>${esc(m.quote)}</p></blockquote>
+          <div class="leader-name"><h3>${esc(m.name)}</h3><span>${esc(m.role)}</span></div>
+          ${m.story ? `<a class="text-link" href="/impact/${m.story}/">Read the full story ${icon('arrow')}</a>` : ''}
+        </div>
+      </article>`).join('')}
+    </div>
+    <ul class="leader-list">${ugandaLeaders.filter((m) => !m.quote).map((m) => `
+      <li>${img(m.image, m.name)}<div><h3>${esc(m.name)}</h3><span>${esc(m.role)}</span></div></li>`).join('')}
+    </ul>
   </div>
 </section>
 
-${verse('Serve one another humbly in love.', 'Galatians 5:13')}
-<section class="section section-tight">
-  <div class="container narrow center">
-    <p class="big-text">Our Christian faith compels us to action. We believe love expressed through service has the power to transform lives and communities. Every partnership, every project, and every relationship we build is grounded in this calling.</p>
+<section class="section convictions">
+  <div class="container">
+    <div class="convictions-head">
+      <p class="eyebrow">Galatians 5:13</p>
+      <h2>“Serve one another humbly in love.”</h2>
+      <p>Our Christian faith compels us to action. Three convictions shape how we work:</p>
+    </div>
+    <ol class="conviction-cards">
+      <li><span class="conviction-num">1</span><h3>Serve</h3><p>Every partnership, every project and every relationship we build is grounded in the calling to serve.</p></li>
+      <li><span class="conviction-num">2</span><h3>Humbly</h3><p>Ugandans lead; we come alongside. True development happens when communities lead their own transformation.</p></li>
+      <li><span class="conviction-num">3</span><h3>In love</h3><p>We believe love expressed through service has the power to transform lives and communities.</p></li>
+    </ol>
   </div>
 </section>
 
