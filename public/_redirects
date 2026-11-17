@@ -1,0 +1,7 @@
+# Old WordPress URLs -> new pages (Cloudflare Pages & Netlify read this file)
+/partnerships   /partners/   301
+/partnerships/  /partners/   301
+/media          /gallery/    301
+/media/         /gallery/    301
+/feed           /            301
+/feed/          /            301
